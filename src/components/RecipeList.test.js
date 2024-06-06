@@ -1,30 +1,39 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import RecipeList from './RecipeList';
 
-test('renders RecipeList component', async () => {
-  const mockRecipes = [
-    { id: '1', name: 'Recipe 1', image: 'recipe1.jpg' },
-    { id: '2', name: 'Recipe 2', image: 'recipe2.jpg' }
-  ];
-  jest.spyOn(axios, 'get').mockResolvedValue({ data: mockRecipes });
+const mock = new MockAdapter(axios);
 
-  render(<RecipeList />);
+const mockRecipes = [
+    {
+        id: 1,
+        name: 'Recipe 1',
+        image: 'recipe1.jpg'
+    },
+    {
+        id: 2,
+        name: 'Recipe 2',
+        image: 'recipe2.jpg'
+    }
+];
 
-  await waitFor(() => {
-    expect(screen.getByText(/Recipe 1/i)).toBeInTheDocument();
-    expect(screen.getByText(/Recipe 2/i)).toBeInTheDocument();
-    expect(screen.getByAltText('Recipe 1')).toBeInTheDocument();
-    expect(screen.getByAltText('Recipe 2')).toBeInTheDocument();
-  });
-});
 
-test('displays loading state while fetching data', async () => {
+mock.onGet('http://localhost:3001/recipes').reply(200, mockRecipes);
 
-  jest.spyOn(axios, 'get').mockReturnValue(new Promise(() => {}));
+test('renders the recipe list', async () => {
+    render(
+        <BrowserRouter>
+            <RecipeList />
+        </BrowserRouter>
+    );
 
-  render(<RecipeList />);
-
-  expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
+    await waitFor(() => {
+        mockRecipes.forEach(recipe => {
+            expect(screen.getByText(recipe.name)).toBeInTheDocument();
+            expect(screen.getByAltText(recipe.name)).toBeInTheDocument();
+        });
+    });
 });

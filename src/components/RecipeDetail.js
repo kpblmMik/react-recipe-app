@@ -7,7 +7,7 @@ const RecipeDetail = () => {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/recipes/${id}`)
+    axios.get(`http://react-recipe-mik.s3-website.eu-central-1.amazonaws.com/db.json`)
       .then(response => setRecipe(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, [id]);

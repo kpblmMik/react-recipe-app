@@ -7,7 +7,7 @@ const RecipeDetail = () => {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    axios.get('http://react-recipe-mik.s3-website.eu-central-1.amazonaws.com/db.json')
+    axios.get('https://react-recipe-mik.s3-website.eu-central-1.amazonaws.com/db.json')
       .then(response => {
         const allRecipes = response.data.recipes; 
         const selectedRecipe = allRecipes.find(r => r.id === parseInt(id));

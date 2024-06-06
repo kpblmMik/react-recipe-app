@@ -5,10 +5,13 @@ import Footer from './components/Footer';
 import Main from './components/Main';
 import RecipeList from './components/RecipeList';
 import RecipeDetail from './components/RecipeDetail';
+import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 
-const App = () => (
-  <Router>
-    <div className="flex flex-col min-h-screen">
+const AppContent = () => {
+  const { theme } = useTheme();
+
+  return (
+    <div className={`flex flex-col min-h-screen ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-800 text-white'}`}>
       <Header />
       <Main>
         <Routes>
@@ -18,7 +21,15 @@ const App = () => (
       </Main>
       <Footer />
     </div>
-  </Router>
+  );
+}
+
+const App = () => (
+  <ThemeProvider>
+    <Router>
+      <AppContent />
+    </Router>
+  </ThemeProvider>
 );
 
 export default App;

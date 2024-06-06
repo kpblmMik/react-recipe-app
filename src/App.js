@@ -11,7 +11,7 @@ const AppContent = () => {
   const { theme } = useTheme();
 
   return (
-    <div className={`flex flex-col min-h-screen ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-800 text-white'}`}>
+    <div className={`flex flex-col min-h-screen ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-800 text-white'}`} data-testid="app-selector">
       <Header />
       <Main>
         <Routes>

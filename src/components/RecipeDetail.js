@@ -9,13 +9,16 @@ const RecipeDetail = () => {
   useEffect(() => {
     axios.get('http://react-recipe-mik.s3-website.eu-central-1.amazonaws.com/db.json')
       .then(response => {
-        const recipeData = response.data.recipes.find(r => r.id.toString() === id);
-        setRecipe(recipeData);
+        const allRecipes = response.data.recipes; 
+        const selectedRecipe = allRecipes.find(r => r.id === parseInt(id));
+        setRecipe(selectedRecipe);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch(error => console.error(error));
   }, [id]);
 
-  if (!recipe) return <p>Loading...</p>;
+  if (!recipe) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="border border-gray-300 p-4 max-w-xl mx-auto">

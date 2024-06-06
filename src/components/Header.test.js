@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Header from './Header';
-import { ThemeProvider, ThemeContext } from '../contexts/ThemeContext';
+import { ThemeProvider } from '../contexts/ThemeContext';
 
 test('renders Header component', () => {
   render(
@@ -17,13 +17,9 @@ test('toggle theme when theme switcher button is clicked', () => {
   const toggleThemeMock = jest.fn();
 
   render(
-    <ThemeContext.Provider value={{ theme: 'light', toggleTheme: toggleThemeMock }}> 
-    {<ThemeContext.Provider value={{ theme: 'light', toggleTheme: toggleThemeMock }}>
-    <Header />
-  </ThemeContext.Provider>
-  /}
+    <ThemeProvider value={{ theme: 'light', toggleTheme: toggleThemeMock }}>
       <Header />
-    </ThemeContext.Provider>
+    </ThemeProvider>
   );
 
   fireEvent.click(screen.getByRole('button'));

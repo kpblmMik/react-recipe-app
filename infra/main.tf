@@ -13,6 +13,11 @@ terraform {
 
 resource "aws_s3_bucket" "aiq" {
   bucket = "react-recipe-mik"
+
+  website {
+    index_document = "index.html"
+    error_document = "index.html"
+  }
 }
 
 resource "aws_s3_bucket_ownership_controls" "example" {
@@ -23,7 +28,7 @@ resource "aws_s3_bucket_ownership_controls" "example" {
 }
 
 resource "aws_s3_bucket_public_access_block" "example" {
-  bucket = aws_s3_bucket.mik.id
+  bucket = aws_s3_bucket.aiq.id
 
   block_public_acls       = false
   block_public_policy     = false
@@ -37,12 +42,12 @@ resource "aws_s3_bucket_acl" "example" {
     aws_s3_bucket_public_access_block.example,
   ]
 
-  bucket = aws_s3_bucket.mik.id
+  bucket = aws_s3_bucket.aiq.id
   acl    = "public-read"
 }
 
 resource "aws_s3_bucket_website_configuration" "web-config" {
-  bucket = aws_s3_bucket.mik.id
+  bucket = aws_s3_bucket.aiq.id
 
   index_document {
     suffix = "index.html"

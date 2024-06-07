@@ -4,12 +4,27 @@ import axios from 'axios';
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     axios.get('https://fi4ezrg6k2.execute-api.eu-central-1.amazonaws.com/recipes')
-      .then(response => setRecipes(response.data))
-      .catch(error => console.error('Error fetching data:', error));
+      .then(response => {
+        if (!Array.isArray(response.data)) {
+          setError('Received data is not an array');
+          console.error('Received data is not an array:', response.data);
+        } else {
+          setRecipes(response.data);
+        }
+      })
+      .catch(error => {
+        setError(error.message);
+        console.error('Error fetching data:', error);
+      });
   }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

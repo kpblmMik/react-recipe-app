@@ -6,7 +6,7 @@ const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    axios.get('http://3.67.180.219:3001/recipes')
+    axios.get('https://fi4ezrg6k2.execute-api.eu-central-1.amazonaws.com/prod/recipes')
       .then(response => setRecipes(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);

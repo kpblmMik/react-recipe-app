@@ -7,13 +7,9 @@ const RecipeDetail = () => {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    axios.get('/db.json')
-      .then(response => {
-        const allRecipes = response.data.recipes; 
-        const selectedRecipe = allRecipes.find(r => r.id === parseInt(id));
-        setRecipe(selectedRecipe);
-      })
-      .catch(error => console.error(error));
+    axios.get(`http://3.67.180.219:3001/recipes/${id}`)
+      .then(response => setRecipe(response.data))
+      .catch(error => console.error('Error fetching data:', error));
   }, [id]);
 
   if (!recipe) {

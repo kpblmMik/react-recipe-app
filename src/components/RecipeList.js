@@ -6,8 +6,8 @@ const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    axios.get('/db.json')
-      .then(response => setRecipes(response.data.recipes))
+    axios.get('http://3.67.180.219:3001/recipes')
+      .then(response => setRecipes(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 

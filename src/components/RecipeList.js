@@ -7,7 +7,7 @@ const RecipeList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('https://fi4ezrg6k2.execute-api.eu-central-1.amazonaws.com/recipes')
+    axios.get('https://7knb1t81pb.execute-api.eu-central-1.amazonaws.com/recipes')
       .then(response => {
         if (!Array.isArray(response.data)) {
           setError('Received data is not an array');
